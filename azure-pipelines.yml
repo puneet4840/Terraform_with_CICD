@@ -25,3 +25,29 @@ stages:
            inputs:
              provider: 'azurerm'
              command: 'validate'
+         - task: TerraformTask@5
+           displayName: Terraform fmt
+           inputs:
+             provider: 'azurerm'
+             command: 'custom'
+             outputTo: 'console'
+             customCommand: 'fmt'
+             environmentServiceNameAzureRM: 'Pay-As-You-Go(65555fd5-5dc0-4bc0-a646-b01ddc552996)'
+         - task: TerraformTask@5
+           displayName: Terraform plan
+           inputs:
+             provider: 'azurerm'
+             command: 'plan'
+             environmentServiceNameAzureRM: 'Pay-As-You-Go(65555fd5-5dc0-4bc0-a646-b01ddc552996)'
+         - task: ArchiveFiles@2
+           inputs:
+             rootFolderOrFile: '$(Build.BinariesDirectory)'
+             includeRootFolder: true
+             archiveType: 'zip'
+             archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+             replaceExistingArchive: true
+         - task: PublishBuildArtifacts@1
+           inputs:
+             PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+             ArtifactName: 'Build.BuildId-artifact'
+             publishLocation: 'Container'
