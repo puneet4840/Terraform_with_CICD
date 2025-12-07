@@ -11,12 +11,17 @@ stages:
      - job: Build
        steps:
          - task: TerraformTask@5
+           displayName: Terraform init
            inputs:
-            provider: 'azurerm'
-            command: 'init'
-            backendServiceArm: 'Pay-As-You-Go(2)(65555fd5-5dc0-4bc0-a646-b01ddc552996)'
-            backendAzureRmOverrideSubscriptionID: '65555fd5-5dc0-4bc0-a646-b01ddc552996'
-            backendAzureRmResourceGroupName: 'learning'
-            backendAzureRmStorageAccountName: 'terrafrombackendpuneet'
-            backendAzureRmContainerName: 'terraform-blob'
-            backendAzureRmKey: 'terraform.tfstate'
+             provider: 'azurerm'
+             command: 'init'
+             backendServiceArm: 'Pay-As-You-Go(65555fd5-5dc0-4bc0-a646-b01ddc552996)'
+             backendAzureRmResourceGroupName: 'learning'
+             backendAzureRmStorageAccountName: 'terrafrombackendpuneet'
+             backendAzureRmContainerName: 'terraform-blob'
+             backendAzureRmKey: 'terraform.tfstate'
+         - task: TerraformTask@5
+           displayName: Terraform validate
+           inputs:
+             provider: 'azurerm'
+             command: 'validate'
