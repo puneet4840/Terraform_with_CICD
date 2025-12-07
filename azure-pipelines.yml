@@ -1,0 +1,22 @@
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+ - stage: Build
+   jobs:
+     - job: Build
+       steps:
+         - task: TerraformTask@5
+           inputs:
+            provider: 'azurerm'
+            command: 'init'
+            backendServiceArm: 'Pay-As-You-Go(2)(65555fd5-5dc0-4bc0-a646-b01ddc552996)'
+            backendAzureRmOverrideSubscriptionID: '65555fd5-5dc0-4bc0-a646-b01ddc552996'
+            backendAzureRmResourceGroupName: 'learning'
+            backendAzureRmStorageAccountName: 'terrafrombackendpuneet'
+            backendAzureRmContainerName: 'terraform-blob'
+            backendAzureRmKey: 'terraform.tfstate'
